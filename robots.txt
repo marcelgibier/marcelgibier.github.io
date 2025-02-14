@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://celmar97.github.io/sitemap.xml
