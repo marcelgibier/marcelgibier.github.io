@@ -2,257 +2,171 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CARES — Conversational Audio Reaction Scenes</title>
 <meta name="description" content="A dataset of two-speaker audio scenes where an environmental sound is placed inside a conversation, and the dialogue reacts to it without ever naming it.">
 <meta property="og:title" content="CARES — Conversational Audio Reaction Scenes">
 <meta property="og:description" content="A dataset of two-speaker audio scenes where an environmental sound is placed inside a conversation.">
 <meta property="og:image" content="https://marcelgibier.github.io/images/cares/pipeline.gif">
-<meta property="og:type" content="website">
 <link rel="icon" href="/images/favicon-32x32.png" sizes="32x32">
 <style>
-:root{
-  --bg:#fbfaf8; --panel:#fff; --ink:#1c1b19; --muted:#6f6b66; --faint:#a8a29a;
-  --rule:#e8e4de; --accent:#b4562a;
-  --pivot:#b4562a; --verbal:#2f6f9f; --behavioral:#6b4c9a; --ambient:#5f7a62;
-  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
-  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
-}
-@media (prefers-color-scheme:dark){
-  :root{--bg:#131211;--panel:#1a1917;--ink:#ece9e4;--muted:#a09a92;--faint:#6d6760;
-        --rule:#2b2926;--pivot:#d97a4a;--verbal:#5f9dcc;--behavioral:#9a7ac9;--ambient:#84a888;--accent:#d97a4a}
-}
+:root{color-scheme:light}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
-     font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+body{margin:0;background:#fff;color:#1f2124;
+     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+     font-size:17px;line-height:1.7;-webkit-text-size-adjust:100%}
 img{max-width:100%;height:auto;display:block}
-a{color:inherit}
-.wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+a{color:#2f6f9f}
+.container{max-width:960px;margin:0 auto;padding-left:24px;padding-right:24px}
+.narrow{max-width:760px;margin:0 auto}
 
-/* ---------- hero ---------- */
-.hero{padding:clamp(72px,11vw,140px) 0 clamp(40px,6vw,72px);
-      padding-top:calc(clamp(72px,11vw,140px) + env(safe-area-inset-top,0px))}
-.eyebrow{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin:0 0 1.6em}
-h1{font-family:var(--serif);font-weight:400;font-size:clamp(3rem,10vw,6.5rem);
-   line-height:.95;letter-spacing:-.02em;margin:0 0 .28em}
-.tagline{font-family:var(--serif);font-size:clamp(1.25rem,3.2vw,1.95rem);line-height:1.35;
-         color:var(--muted);max-width:19em;margin:0 0 2.2em;font-style:italic}
-.lede{font-size:1.08rem;line-height:1.7;max-width:34em;margin:0;color:var(--ink)}
-.lede b{font-weight:600}
-.links{display:flex;flex-wrap:wrap;gap:.7em;margin-top:2.6em}
-.links a{display:inline-block;font-size:.88rem;letter-spacing:.02em;text-decoration:none;
-         padding:.62em 1.25em;border:1px solid var(--rule);border-radius:100px;
-         color:var(--muted);transition:border-color .18s,color .18s}
-.links a:hover{border-color:var(--accent);color:var(--accent)}
-.links a.primary{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-.links a.primary:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+header{text-align:center;padding-top:76px;padding-bottom:44px}
+h1{font-size:clamp(2.3rem,6vw,3.4rem);font-weight:700;letter-spacing:-.02em;margin:0 0 .25em}
+.subtitle{font-size:clamp(1.05rem,2.6vw,1.4rem);color:#4a4d51;margin:0 0 1.4em;font-weight:400}
+.authors{font-size:1rem;margin:0 0 .25em}
+.affil{font-size:.92rem;color:#6b6e73;margin:0 0 1.7em}
+.buttons{display:flex;flex-wrap:wrap;gap:.6em;justify-content:center}
+.buttons a{display:inline-block;background:#1f2124;color:#fff;text-decoration:none;
+           font-size:.92rem;padding:.55em 1.3em;border-radius:100px}
+.buttons a:hover{background:#2f6f9f}
 
-/* ---------- pipeline ---------- */
-.pipeline{padding:clamp(28px,5vw,56px) 0 clamp(52px,8vw,96px)}
-.pipeline figure{margin:0}
-.pipeline .plate{display:block;background:#fff;border:1px solid var(--rule);border-radius:10px;
-                 padding:clamp(14px,2.6vw,30px);transition:border-color .18s}
-.pipeline .plate:hover{border-color:var(--accent)}
-.pipeline figcaption{margin-top:1.3em;font-size:.86rem;color:var(--faint);text-align:center;line-height:1.55}
-.pipeline figcaption em{font-style:normal;color:var(--muted)}
+section{padding-top:40px;padding-bottom:40px}
+h2{text-align:center;font-size:1.55rem;font-weight:700;margin:0 0 1.3em}
+p{margin:0 0 1.1em}
 
-/* ---------- section heads ---------- */
-.sec{padding:clamp(48px,7vw,84px) 0;border-top:1px solid var(--rule)}
-h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.7rem,4vw,2.5rem);
-   letter-spacing:-.01em;margin:0 0 .5em}
-.sec > .wrap > p.intro{color:var(--muted);max-width:33em;margin:0 0 2.6em;font-size:1rem}
+figure{margin:0}
+figure img{border:1px solid #e6e6e6;border-radius:6px;width:100%}
+figcaption{margin-top:1em;font-size:.92rem;color:#6b6e73;text-align:center}
 
-/* ---------- reaction types ---------- */
-.types{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1.6em;margin:0}
-.types > div{padding-top:1.1em;border-top:2px solid var(--c)}
-.types dt{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--c);
-          font-weight:600;margin:0 0 .6em}
-.types dd{margin:0;font-size:.97rem;line-height:1.6;color:var(--muted)}
-.t1{--c:var(--pivot)}.t2{--c:var(--verbal)}.t3{--c:var(--behavioral)}.t4{--c:var(--ambient)}
+table.types{width:100%;border-collapse:collapse}
+table.types td{padding:.75em 0;border-top:1px solid #ededed;vertical-align:baseline}
+table.types tr:first-child td{border-top:0}
+table.types td:first-child{width:130px;font-weight:600;white-space:nowrap}
+.c1{color:#b4562a}.c2{color:#2f6f9f}.c3{color:#6b4c9a}.c4{color:#4f7a56}
 
-/* ---------- samples ---------- */
-.sample{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(24px,4vw,56px);
-        padding:clamp(32px,5vw,52px) 0;border-top:1px solid var(--rule)}
-.sample:first-of-type{border-top:0;padding-top:0}
-.badge{display:inline-block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
-       font-weight:600;color:#fff;background:var(--c);padding:.3em .8em;border-radius:3px}
-.meta{margin:1.1em 0 0;font-family:var(--mono);font-size:.82rem;color:var(--faint);line-height:1.9}
-.meta b{color:var(--muted);font-weight:500}
-audio{width:100%;margin-top:1.4em;height:40px}
-.exchange{margin:0;font-size:.98rem;line-height:1.75}
-.turn{display:grid;grid-template-columns:1.6em 1fr;gap:.5em;color:var(--muted)}
-.turn + .turn{margin-top:.9em}
-.turn .who{font-family:var(--mono);font-size:.76rem;color:var(--faint);padding-top:.32em}
-.cue{display:flex;align-items:center;gap:.8em;margin:1.05em 0;font-size:.76rem;
-     letter-spacing:.11em;text-transform:uppercase;color:var(--c);font-weight:600}
-.cue::before,.cue::after{content:"";height:1px;background:var(--c);opacity:.32;flex:1}
-.cue span{flex:0 0 auto}
-.reading{margin:1.5em 0 0;font-size:.9rem;line-height:1.6;color:var(--faint);
-         border-left:2px solid var(--rule);padding-left:1em}
+.ex{padding:26px 0;border-top:1px solid #ededed}
+.ex:first-of-type{border-top:0;padding-top:0}
+.ex h3{font-size:1rem;font-weight:600;margin:0 0 .15em}
+.ex .where{font-size:.9rem;color:#6b6e73;margin:0 0 .9em}
+.ex audio{width:100%;height:38px;margin-bottom:1.2em}
+.ex .turn{margin:0 0 .55em;padding-left:2em;text-indent:-2em;font-size:.97rem}
+.ex .turn b{font-weight:600;color:#8a8d91;font-size:.82rem;display:inline-block;width:2em;text-indent:0}
+.ex .sound{margin:.9em 0;font-size:.88rem;font-weight:600;text-align:center;padding:.35em 0;
+           background:#f6f6f6;border-radius:4px}
+.ex .say{margin:1em 0 0;font-size:.9rem;color:#6b6e73}
 
-/* ---------- footer ---------- */
-footer{border-top:1px solid var(--rule);padding:clamp(40px,6vw,64px) 0;
-       padding-bottom:calc(clamp(40px,6vw,64px) + env(safe-area-inset-bottom,0px))}
-.foot{display:flex;flex-wrap:wrap;gap:1.6em;justify-content:space-between;align-items:baseline;
-      font-size:.88rem;color:var(--faint)}
-.foot a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--rule)}
-.foot a:hover{color:var(--accent);border-bottom-color:var(--accent)}
-
-@media (max-width:760px){
-  .sample{grid-template-columns:1fr;gap:1.6em}
-  .sample:first-of-type{padding-top:0}
-  .tagline{max-width:none}
-}
+footer{text-align:center;padding-top:44px;padding-bottom:60px;font-size:.9rem;color:#8a8d91;
+       border-top:1px solid #ededed;margin-top:28px}
+footer a{color:#6b6e73}
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="wrap">
-    <p class="eyebrow">Dataset &middot; Inria Paris</p>
-    <h1>CARES</h1>
-    <p class="tagline">Conversational Audio Reaction Scenes</p>
-    <p class="lede">
-      Two people talk. A sound happens. What the conversation <em>does</em> with that sound —
-      seize it, brush it off, stumble over it, ignore it — is the label.
-      <b>The sound is never named.</b> Recovering the label means hearing the sound
-      and reading what the dialogue makes of it.
-    </p>
-    <nav class="links">
-      <a class="primary" href="https://github.com/marcelgibier/CARES">Code on GitHub</a>
-      <a href="#listen">Listen to five scenes</a>
-      <a href="https://marcelgibier.github.io/">Marcel Gibier</a>
-    </nav>
-  </div>
+<header class="container">
+  <h1>CARES</h1>
+  <p class="subtitle">Conversational Audio Reaction Scenes</p>
+  <p class="authors">Marcel Gibier</p>
+  <p class="affil">Inria Paris</p>
+  <nav class="buttons">
+    <a href="https://github.com/marcelgibier/CARES">Code</a>
+    <a href="#examples">Examples</a>
+    <a href="https://marcelgibier.github.io/">Homepage</a>
+  </nav>
 </header>
 
-<section class="pipeline">
-  <div class="wrap">
-    <figure>
-      <a class="plate" href="/images/cares/pipeline.gif" title="Open the diagram at full size">
-        <img src="/images/cares/pipeline.gif" alt="The CARES pipeline: themes, template, scenario, dialogue, voice synthesis, mixing, audio scene.">
-      </a>
-      <figcaption>Seven stages, from themes to mixed audio. Everything structural — scene, roles, sounds,
-      reaction types, train/test split — is drawn from a fixed seed before the first model call.
-      <em>Click to enlarge.</em></figcaption>
-    </figure>
+<section class="container">
+  <div class="narrow">
+    <p>CARES is a dataset of two-speaker audio scenes in which an environmental sound is placed
+    inside a conversation. Each sound carries a <b>reaction type</b> that the dialogue must
+    realise, and the sound itself is never named. Recovering the type therefore means hearing
+    the sound and reading what the conversation does with it.</p>
   </div>
 </section>
 
-<section class="sec">
-  <div class="wrap">
-    <h2>Four ways to react</h2>
-    <p class="intro">Every sound placed in a conversation carries exactly one of these, decided before
-    the dialogue is written. The writer has to realise it; the listener has to recover it.</p>
-    <dl class="types">
-      <div class="t1"><dt>Pivot</dt><dd>The sound takes over. It becomes the subject for several turns.</dd></div>
-      <div class="t2"><dt>Verbal</dt><dd>One speaker acknowledges it in passing, then the conversation resumes.</dd></div>
-      <div class="t3"><dt>Behavioral</dt><dd>Nobody mentions it, but it visibly disrupts the speaking.</dd></div>
-      <div class="t4"><dt>Ambient</dt><dd>Nobody reacts at all.</dd></div>
-    </dl>
+<section class="container">
+  <h2>Pipeline</h2>
+  <figure>
+    <a href="/images/cares/pipeline.gif">
+      <img src="/images/cares/pipeline.gif" alt="The CARES pipeline: themes, template, scenario, dialogue, voice synthesis, mixing, audio scene.">
+    </a>
+    <figcaption>Seven stages, from conversation themes to mixed audio. Everything structural —
+    scene, roles, sounds, reaction types, train/test split — is drawn from a fixed seed before
+    the first model call. Click to enlarge.</figcaption>
+  </figure>
+</section>
+
+<section class="container">
+  <h2>Reaction types</h2>
+  <div class="narrow">
+    <table class="types">
+      <tr><td class="c1">Pivot</td><td>The sound takes over. It becomes the subject for several turns.</td></tr>
+      <tr><td class="c2">Verbal</td><td>One speaker acknowledges it in passing, then the conversation resumes.</td></tr>
+      <tr><td class="c3">Behavioral</td><td>Nobody mentions it, but it visibly disrupts the speaking.</td></tr>
+      <tr><td class="c4">Ambient</td><td>Nobody reacts at all.</td></tr>
+    </table>
   </div>
 </section>
 
-<section class="sec" id="listen">
-  <div class="wrap">
-    <h2>Five scenes</h2>
-    <p class="intro">Full mixes, as they ship. Each one is about a minute and a half; the sound arrives
-    at the time given.</p>
+<section class="container" id="examples">
+  <h2>Examples</h2>
+  <div class="narrow">
 
-    <article class="sample t1">
-      <div>
-        <span class="badge">Pivot</span>
-        <p class="meta"><b>beach</b><br>watch_alarm &middot; 48s<br>1&nbsp;min&nbsp;35</p>
-        <audio controls preload="none" src="/files/cares/1_pivot.mp3"></audio>
-      </div>
-      <div>
-        <div class="exchange">
-          <p class="turn"><span class="who">A</span><span>In my notes. On my phone. Which is with me at all times, so.</span></p>
-          <p class="cue"><span>a watch alarm goes off</span></p>
-          <p class="turn"><span class="who">B</span><span>Hang on, was that you? Something just went off right by me.</span></p>
-        </div>
-        <p class="reading">The sound becomes the subject. Everything that was being argued about stops.</p>
-      </div>
-    </article>
+    <div class="ex">
+      <h3 class="c1">Pivot</h3>
+      <p class="where">beach · watch_alarm at 0:48 · 1 min 35</p>
+      <audio controls preload="none" src="/files/cares/1_pivot.mp3"></audio>
+      <p class="turn"><b>A</b>In my notes. On my phone. Which is with me at all times, so.</p>
+      <p class="sound">a watch alarm goes off</p>
+      <p class="turn"><b>B</b>Hang on, was that you? Something just went off right by me.</p>
+      <p class="say">The sound becomes the subject. What they were arguing about stops.</p>
+    </div>
 
-    <article class="sample t2">
-      <div>
-        <span class="badge">Verbal</span>
-        <p class="meta"><b>café</b><br>chair_scraping &middot; 72s<br>1&nbsp;min&nbsp;30</p>
-        <audio controls preload="none" src="/files/cares/2_verbal.mp3"></audio>
-      </div>
-      <div>
-        <div class="exchange">
-          <p class="turn"><span class="who">A</span><span>…I've told Marco he's on potatoes and he's furious about the demotion.</span></p>
-          <p class="cue"><span>a chair scrapes</span></p>
-          <p class="turn"><span class="who">B</span><span>Oof, that went right through my back teeth. Sharp. Anyway, poor Marco, twenty years of stuffing rights gone in one phone call.</span></p>
-        </div>
-        <p class="reading">Noted, then dropped. The word <em>anyway</em> is doing the work — the subject survives.</p>
-      </div>
-    </article>
+    <div class="ex">
+      <h3 class="c2">Verbal</h3>
+      <p class="where">café · chair_scraping at 1:12 · 1 min 30</p>
+      <audio controls preload="none" src="/files/cares/2_verbal.mp3"></audio>
+      <p class="turn"><b>A</b>…I've told Marco he's on potatoes and he's furious about the demotion.</p>
+      <p class="sound">a chair scrapes</p>
+      <p class="turn"><b>B</b>Oof, that went right through my back teeth. Sharp. Anyway, poor Marco, twenty years of stuffing rights gone in one phone call.</p>
+      <p class="say">Noted, then dropped. The word <i>anyway</i> does the work — the subject survives.</p>
+    </div>
 
-    <article class="sample t3">
-      <div>
-        <span class="badge">Behavioral</span>
-        <p class="meta"><b>airport</b><br>security_conveyor_belt &middot; 16s<br>1&nbsp;min&nbsp;32</p>
-        <audio controls preload="none" src="/files/cares/3_behavioral.mp3"></audio>
-      </div>
-      <div>
-        <div class="exchange">
-          <p class="turn"><span class="who">A</span><span>Manchester. Back Sunday. Actually, funny thing, I've got the Pixies next Friday. Dan sorted it.</span></p>
-          <p class="cue"><span>a security conveyor belt starts</span></p>
-          <p class="turn"><span class="who">B</span><span>Wait, next Friday, at the… the big one, the one by the station, it's got the ugly roof, I can never… anyway, yeah, that place.</span></p>
-        </div>
-        <p class="reading">Never mentioned. It shows only in the way the sentence comes apart and is rebuilt.</p>
-      </div>
-    </article>
+    <div class="ex">
+      <h3 class="c3">Behavioral</h3>
+      <p class="where">airport · security_conveyor_belt at 0:16 · 1 min 32</p>
+      <audio controls preload="none" src="/files/cares/3_behavioral.mp3"></audio>
+      <p class="turn"><b>A</b>Manchester. Back Sunday. Actually, funny thing, I've got the Pixies next Friday. Dan sorted it.</p>
+      <p class="sound">a security conveyor belt starts</p>
+      <p class="turn"><b>B</b>Wait, next Friday, at the… the big one, the one by the station, it's got the ugly roof, I can never… anyway, yeah, that place.</p>
+      <p class="say">Never mentioned. It shows only in the way the sentence comes apart and is rebuilt.</p>
+    </div>
 
-    <article class="sample t4">
-      <div>
-        <span class="badge">Ambient</span>
-        <p class="meta"><b>public park</b><br>baby_crying &middot; 20s<br>1&nbsp;min&nbsp;33</p>
-        <audio controls preload="none" src="/files/cares/4_ambient.mp3"></audio>
-      </div>
-      <div>
-        <div class="exchange">
-          <p class="turn"><span class="who">A</span><span>She sits out on that balcony with her tea and she's already got a list of things to tell me.</span></p>
-          <p class="cue"><span>a baby starts crying</span></p>
-          <p class="turn"><span class="who">B</span><span>A list. Of course she does. And you just let her run through it?</span></p>
-        </div>
-        <p class="reading">Clearly audible, and the conversation does not bend around it. This is the hard
-        negative: a sound that is there and means nothing.</p>
-      </div>
-    </article>
+    <div class="ex">
+      <h3 class="c4">Ambient</h3>
+      <p class="where">public park · baby_crying at 0:20 · 1 min 33</p>
+      <audio controls preload="none" src="/files/cares/4_ambient.mp3"></audio>
+      <p class="turn"><b>A</b>She sits out on that balcony with her tea and she's already got a list of things to tell me.</p>
+      <p class="sound">a baby starts crying</p>
+      <p class="turn"><b>B</b>A list. Of course she does. And you just let her run through it?</p>
+      <p class="say">Clearly audible, and the conversation does not bend around it.</p>
+    </div>
 
-    <article class="sample t1">
-      <div>
-        <span class="badge">Pivot</span>
-        <p class="meta"><b>kitchen</b><br>siren_ambulance &middot; 33s<br>rare sound<br>1&nbsp;min&nbsp;39</p>
-        <audio controls preload="none" src="/files/cares/5_pivot.mp3"></audio>
-      </div>
-      <div>
-        <div class="exchange">
-          <p class="turn"><span class="who">A</span><span>He keeps saying he's just being direct. Which, fine, be direct in the huddle. Not while I'm trying to read a hitter.</span></p>
-          <p class="cue"><span>an ambulance siren passes</span></p>
-          <p class="turn"><span class="who">B</span><span>Whoa, that's right outside. That was RIGHT outside!</span></p>
-        </div>
-        <p class="reading">Rare sounds are always pivots — the one case where the sound outranks whatever
-        the conversation was about.</p>
-      </div>
-    </article>
+    <div class="ex">
+      <h3 class="c1">Pivot — rare sound</h3>
+      <p class="where">kitchen · siren_ambulance at 0:33 · 1 min 39</p>
+      <audio controls preload="none" src="/files/cares/5_pivot.mp3"></audio>
+      <p class="turn"><b>A</b>He keeps saying he's just being direct. Which, fine, be direct in the huddle. Not while I'm trying to read a hitter.</p>
+      <p class="sound">an ambulance siren passes</p>
+      <p class="turn"><b>B</b>Whoa, that's right outside. That was RIGHT outside!</p>
+      <p class="say">Rare sounds are always pivots — the one case where the sound outranks the subject.</p>
+    </div>
+
   </div>
 </section>
 
-<footer>
-  <div class="wrap foot">
-    <span>CARES — Marcel Gibier, Inria Paris</span>
-    <span>
-      <a href="https://github.com/marcelgibier/CARES">GitHub</a> &nbsp;·&nbsp;
-      <a href="https://marcelgibier.github.io/">Personal site</a>
-    </span>
-  </div>
+<footer class="container">
+  CARES · <a href="https://github.com/marcelgibier/CARES">GitHub</a> ·
+  <a href="https://marcelgibier.github.io/">Marcel Gibier</a>
 </footer>
 
 </body>
